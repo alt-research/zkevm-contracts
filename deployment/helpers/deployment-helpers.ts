@@ -21,6 +21,7 @@ import {
     PolygonZkEVMDeployer,
 } from "../../typechain-types";
 import {string} from "yargs";
+import { network } from 'hardhat';
 
 export async function deployPolygonZkEVMDeployer(
     deployerAddress: string,
@@ -38,6 +39,7 @@ export async function deployPolygonZkEVMDeployer(
         r: "0x5ca1ab1e0", // Equals 0x00000000000000000000000000000000000000000000000000000005ca1ab1e0
         s: "0x5ca1ab1e", // Equals 0x000000000000000000000000000000000000000000000000000000005ca1ab1e
     };
+    const chainIdHex = await network.provider.send('eth_chainId');
     const tx = ethers.Transaction.from({
         to: null, // bc deployment transaction, "to" is "0x"
         nonce: 0,
@@ -46,7 +48,8 @@ export async function deployPolygonZkEVMDeployer(
         gasPrice: gasPrice,
         data: deployTxZKEVMDeployer,
         type: 0, // legacy transaction
-        signature,
+        signature: signature,
+        chainId: parseInt(chainIdHex, 16)
     });
 
     const totalEther = gasLimit * gasPrice; // 0.1 ether

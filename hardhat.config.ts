@@ -204,6 +204,16 @@ const config: HardhatUserConfig = {
                 count: 20,
             },
         },
+        custom: {
+            timeout: 600000,
+            url: process.env.CUSTOM_NETWORK_URL || "http://127.0.0.1:8545",
+            accounts: {
+                mnemonic: process.env.MNEMONIC || DEFAULT_MNEMONIC,
+                path: "m/44'/60'/0'/0",
+                initialIndex: 0,
+                count: 20,
+            },
+        },
         hardhat: {
             initialDate: "0",
             allowUnlimitedContractSize: true,
