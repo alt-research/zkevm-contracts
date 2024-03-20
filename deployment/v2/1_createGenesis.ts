@@ -424,7 +424,9 @@ async function main() {
 
     if (deployParameters.test) {
         // Add tester account with ether
-        genesis[genesis.length - 1].balance = "100000000000000000000000";
+        genesis[genesis.length - 1].balance = process.env.GENESIS_BALANCE
+         ? process.env.GENESIS_BALANCE
+         : '21000000000000000000000000';
     }
 
     // calculate root
